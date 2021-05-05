@@ -12,7 +12,7 @@ rule download_provision:
 	output:
 		"provision.json"	
 	shell:
-		     	"curl -u $GISAIDUSER:$GISAIDPASS  https://www.epicov.org/epi3/3p/kaust3/export/provision.json.xz | xz -d -T8 > ./provision.json"
+		"curl -u $GISAIDUSER:$GISAIDPASS  https://www.epicov.org/epi3/3p/kaust3/export/provision.json.xz | xz -d -T8 > ./provision.json"
 
 rule sample_sequences:
 	input:
@@ -23,12 +23,12 @@ rule sample_sequences:
 		"python assaym.py sampleseq -j provision.json"
 
 rule add_reference:
-    input:
-        ["lineages.fasta","reference.fasta"]
-    output:
-        "lin_ref.fasta"
-    shell:
-        "cat lineages.fasta reference.fasta > lin_ref.fasta"
+	input:
+		["lineages.fasta","reference.fasta"]
+	output:
+		["lin_ref.fasta"]
+	shell:
+		"cat lineages.fasta reference.fasta > lin_ref.fasta"
 
 rule compute_deltag:
 	input:
