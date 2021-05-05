@@ -1,0 +1,45 @@
+from datetime import date
+
+rule summary:
+	input:
+		["deltag.tsv","lineages.tsv"]
+	output:
+		["summary.csv","details.csv"]
+	shell:
+		"python assaym.py summary -d deltag.tsv"
+
+rule download_provision:
+	output:
+		"provision.json"	
+	shell:
+		     	"curl -u $GISAIDUSER:$GISAIDPASS  https://www.epicov.org/epi3/3p/kaust3/export/provision.json.xz | xz -d -T8 > ./provision.json"
+
+rule sample_sequences:
+	input:
+		"provision.json"
+	output:
+		["lineages.fasta","lineages.tsv"]
+	shell:
+		"python assaym.py sampleseq -j provision.json"
+
+rule add_reference:
+    input:
+        ["lineages.fasta","reference.fasta"]
+    output:
+        "lin_ref.fasta"
+    shell:
+        "cat lineages.fasta reference.fasta > lin_ref.fasta"
+
+rule compute_deltag:
+	input:
+		lineages_fasta="lin_ref.fasta",
+		assays_xlsx="assay.xlsx"
+	output:
+		"deltag.tsv",
+	shell:
+		"python assaym.py deltag -s {input.lineages_fasta} -a {input.assays_xlsx} > deltag.tsv"
+  
+
+
+
+
