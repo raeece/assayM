@@ -20,8 +20,7 @@
 * output results as summary.csv and details.csv
 
 
-## Run the following commands to run the complete pipeline takes ~1 hour on a laptop
-## Complete 
+## Run the following commands to run the complete pipeline takes ~1 hour on a laptop 
     export GISAIDUSER=gisaidusername
     export GISAIDPASS=gisaidpass
     snakemake --delete-all-output
