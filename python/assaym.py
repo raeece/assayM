@@ -69,8 +69,8 @@ def deltag(args):
                     print(fastarecord.name,row['assay_name'],row['type'],'',sep="\t")                
 
 def disvariants(args):
-    print(args.reference,deltag.tsv)
-    all=pandas.read_csv(deltag.tsv,sep="\t",header=None)
+    print(args.reference,args.deltagtsv)
+    all=pandas.read_csv(args.deltagtsv,sep="\t",header=None)
     ref=all[all[0]==args.reference]
     m=all.merge(ref,how='left',on=[1,2])
     m['dg_increase_pct']=m.apply(lambda row:-100*(row['3_x']-row['3_y'])/row['3_y'],axis=1)
