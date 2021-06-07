@@ -11,8 +11,26 @@ import pandas
 import json
 import time
 
+""" Command line program to sample sequences from GISAID, compute deltaG on subsampled sequences against primer sequences and display summary
+
+
+"""
+
+
 
 def sampleseq(args):
+    """ 
+    Using json sequences file as input samples sequences per lineage
+
+    Parameters
+    ----------
+    json file downloaded from GISAID
+
+    Output
+    ------
+    lineages fasta file
+    lineages tsv file
+    """
     f=open(args.json)
     lineage_acc={}
     lineage_seq={}
@@ -37,6 +55,18 @@ def sampleseq(args):
     
 
 def deltag(args):
+    """ 
+    computes deltag for each pair of sequences against primer sequences
+
+    Parameters
+    ----------
+    fasta file - containing covid sequences
+    xlsx file - Primer sequences
+
+    Output
+    -----
+    Prints a line for each pair of sequence,primers saved as deltag.tsv file 
+    """
     assay_data_df = pandas.read_excel(args.assays, sheet_name='Sheet1', usecols=['gene target', 'assay_name','country','type','sequence','position'])
     for fastarecord in SeqIO.parse(args.sequences, "fasta"):
         for index, row in assay_data_df.iterrows(): 
@@ -79,6 +109,19 @@ def disvariants(args):
     result.to_csv(sys.stdout,index=False,sep="\t")
     
 def summary(args):
+    """ 
+    Identifies potential disruptive variants by printing a summary
+
+    Parameters
+    ----------
+    deltagtsv file  - deltag file from deltag command
+    lineages tsv file - lineages tsv file from sampleseq
+
+    Output
+    -----
+    summary.csv 
+    details.csv 
+    """
     print(args.reference,args.deltagtsv,args.lineagestsv)
     deltag=pandas.read_csv(args.deltagtsv,sep="\t",header=None)
     lineages=pandas.read_csv(args.lineagestsv,sep="\t",header=None)
