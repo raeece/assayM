@@ -1,4 +1,4 @@
 # assayM
-assayM: a web application to monitor mutations in COVID-19 diagnostic assays
+assayM: track sensitivity of RT-PCR primers on COVID-19 Variants
 
 Live application hosted on [assayM](https://grafnet.kaust.edu.sa/assayM)

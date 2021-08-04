@@ -1,7 +1,7 @@
 # assayM
 
 ## Requirements
-    pip install biopython pandas openpyxl xlrd primer3-py
+    pip install biopython pandas openpyxl xlrd primer3-py plotly dash dash-bootstrap-components snakemake
 
 ## Files  
 * sequences.fasta - fasta sequences to be screened for deltaG
