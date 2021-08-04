@@ -23,7 +23,9 @@ last_updated=f"#last Updated {last_modfied_time} based on {len(df['Lineage'].uni
 
 
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+server = app.server
 
 row = html.Div(
     [
