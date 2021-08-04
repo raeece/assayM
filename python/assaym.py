@@ -11,6 +11,33 @@ import pandas
 import json
 import time
 
+""" Command line program to convert lineage_data.json to csv format
+
+"""
+
+
+
+def lineage_jsontocsv(args):
+    """ 
+    Using json lineage description file (lineage_data.json) as input 
+
+    Parameters
+    ----------
+    json file from Pangolin Covlineages website 
+
+    Output
+    ------
+    lineages description tsv file
+    """
+    
+    lindesc_tsv=open("lineage_data.tsv",'w')
+    with open(args.json) as jsonFile:
+        jsonObject = json.load(jsonFile)
+        lindesc_tsv.write(f"lineage\tdescription\tcountries\n")
+        for k,v in jsonObject.items():
+            lindesc_tsv.write(f"{v['Lineage']}\t{v['Description']}\t{v['Countries']}\n")
+        jsonFile.close()
+
 """ Command line program to sample sequences from GISAID, compute deltaG on subsampled sequences against primer sequences and display summary
 
 
@@ -105,7 +132,9 @@ def disvariants(args):
     m=all.merge(ref,how='left',on=[1,2])
     m['dg_increase_pct']=m.apply(lambda row:-100*(row['3_x']-row['3_y'])/row['3_y'],axis=1)
     m.columns=['Sequence','Primer','Direction','dg_sequence','Ref','dg_ref','dg_increase_pct']
-    result=m.loc[m['dg_increase_pct']>20,["Sequence","Primer","Direction","dg_sequence","dg_increase_pct"]]
+    #result=m.loc[m['dg_increase_pct']>20,["Sequence","Primer","Direction","dg_sequence","dg_increase_pct"]]
+    result=m[["Sequence","Primer","Direction","dg_sequence","dg_increase_pct"]]
+
     result.to_csv(sys.stdout,index=False,sep="\t")
     
 def summary(args):
@@ -137,7 +166,9 @@ def summary(args):
     m3['mismatch_pct']=round(m3['mismatch_variants']*100/m3['total_variants'],2)
     m3.to_csv('summary.csv',index=False,sep="\t")
     #m2[(m2['dg_increase_pct']>0) & (m2['dg_sequence']>0)]['Primer','Direction','lineage','Sequence','dg_sequence'].to_csv('details.csv',index=False,sep="\t")
-    m2.loc[(m2['dg_increase_pct']>0) & (m2['dg_sequence']>0),['Primer','Direction','lineage','Sequence','dg_sequence']].to_csv('details.csv',index=False,sep="\t")
+    #m2.loc[(m2['dg_increase_pct']>0) & (m2['dg_sequence']>0),['Primer','Direction','lineage','Sequence','dg_sequence']].to_csv('details.csv',index=False,sep="\t")
+    m2[['Primer','Direction','lineage','Sequence','dg_sequence']].to_csv('details.csv',index=False,sep="\t")
+
 
     
 def match(query,subject):
@@ -170,8 +201,11 @@ if __name__=='__main__':
     sampleseq_parser=sp.add_parser('sampleseq',help='Sample Sequences by lineage')
     sampleseq_parser.add_argument('-j','--json',help='gisaid json file',required=True)
     sampleseq_parser.set_defaults(func=sampleseq)
-    
-    
+
+    sampleseq_parser=sp.add_parser('lineagedatajson',help='Convert Lineage data json to csv')
+    sampleseq_parser.add_argument('-j','--json',help='lineage_data json file',required=True)
+    sampleseq_parser.set_defaults(func=lineage_jsontocsv)
+        
     getlineagefasta_parser=sp.add_parser('lineagefasta',help='extract fasta records of the give lineages from GISAID')
     deltag_parser=sp.add_parser('deltag',help='computer deltaG for primers against variants')
     deltag_parser.add_argument('-s','--sequences',help='fasta file name',required=True)

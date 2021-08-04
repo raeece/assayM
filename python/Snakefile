@@ -1,5 +1,9 @@
 from datetime import date
 
+rule all:
+	input:
+		["lineage_data.json","details.csv","summary.csv"]
+
 rule summary:
 	input:
 		["deltag.tsv","lineages.tsv"]
@@ -13,6 +17,12 @@ rule download_provision:
 		"provision.json"	
 	shell:
 		"curl -u $GISAIDUSER:$GISAIDPASS  https://www.epicov.org/epi3/3p/kaust3/export/provision.json.xz | xz -d -T8 > ./provision.json"
+
+rule download_lineage_data:
+	output:
+		"lineage_data.json"
+	shell:
+		"curl -o lineage_data.json https://raw.githubusercontent.com/cov-lineages/lineages-website/master/_data/lineage_data.json"
 
 rule sample_sequences:
 	input:

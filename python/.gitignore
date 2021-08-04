@@ -1,0 +1,12 @@
+.snakemake/
+__pycache__/
+details.csv
+lin_ref.fasta
+lineage_data.json
+lineage_data.tsv
+lineages.fasta
+lineages.tsv
+provision.json
+summary.csv
+~$cdc_assays.xlsx
+deltag.tsv
