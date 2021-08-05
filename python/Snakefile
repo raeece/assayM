@@ -2,7 +2,7 @@ from datetime import date
 
 rule all:
 	input:
-		["lineage_data.json","details.csv","summary.csv"]
+		["lineage_data.tsv","details.csv","summary.csv"]
 
 rule summary:
 	input:
@@ -23,6 +23,14 @@ rule download_lineage_data:
 		"lineage_data.json"
 	shell:
 		"curl -o lineage_data.json https://raw.githubusercontent.com/cov-lineages/lineages-website/master/_data/lineage_data.json"
+
+rule convert_lineage_data:
+	input:
+		["lineage_data.json"]
+	output:
+		"lineage_data.tsv"
+	shell:
+		"python assaym.py lineagedatajson -j lineage_data.json"
 
 rule sample_sequences:
 	input:
