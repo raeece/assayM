@@ -34,7 +34,7 @@ row = html.Div(
             [
                 dbc.Col(html.Img(src=app.get_asset_url('logo1.png'),height=130,width=300),width=3),
                 dbc.Col(html.Div([html.H1("assayM - track sensitivity of RT-PCR primers on COVID-19 Variants"),
-                html.H4(["Enabled by data from",html.Img(src=app.get_asset_url('gisaid.png'),height=30,width=85),"and cov-lineages.org"]),
+                html.H4(["Developed @ Arnab Pain Lab, enabled by data from",html.Img(src=app.get_asset_url('gisaid.png'),height=30,width=85),"and cov-lineages.org"]),
                 html.H5(last_updated),html.Div(html.H6("Highlighted DeltaG > 0 implies potential loss of sensitivity of the PCR primer for that specific variant"),style={'color': 'tomato', 'fontSize': 14})]),
                 width=9),
             ]
