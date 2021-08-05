@@ -24,6 +24,7 @@ last_updated=f"#last Updated {last_modfied_time} based on {len(df['Lineage'].uni
 
 
 app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP])
+app.title = "assayM"
 
 server = app.server
 
