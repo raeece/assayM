@@ -103,7 +103,7 @@ header = html.Div(
         dbc.Row(
             [
                 dbc.Col(html.Div([html.A(href="https://www.biorxiv.org/content/10.1101/2020.12.18.423467v1",children=[html.Img(src=app.get_asset_url('logo1.png'),height=130,width=300)]),
-                html.H6(["Enabled by data from",html.A(href="https://www.gisaid.org/",children=[html.Img(src=app.get_asset_url('gisaid.png'),height=30,width=85)]),]),acknowledgements]),width=3),
+                html.H6(["Enabled by data from  ",html.A(href="https://www.gisaid.org/",children=[html.Img(src=app.get_asset_url('gisaid.png'),height=30,width=85)]),]),acknowledgements]),width=3),
                 dbc.Col(html.Div([html.H1("assayM - track sensitivity of RT-PCR primers on COVID-19 Variants"),
                 html.H5(last_updated),html.Div(html.H6("Highlighted DeltaG > 0 implies potential loss of sensitivity of the PCR primer for that specific variant"),style={'color': 'tomato', 'fontSize': 14})]),
                 width=9),
@@ -203,7 +203,8 @@ app.layout=html.Div([
     ),
     html.Div(id='datatable-interactivity-container'),
     footer
-])
+],style={'marginLeft': 10, 'marginRight': 10, 'marginTop': 10, 'marginBottom': 10,                
+                'padding': '6px 0px 0px 8px'})
 
 
 
